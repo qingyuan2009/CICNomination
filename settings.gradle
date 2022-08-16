@@ -1,0 +1,6 @@
+rootProject.name = 'CICNomination'
+include 'nomination.application'
+include 'nomination.core'
+include 'nomination.api'
+
+

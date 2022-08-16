@@ -1,0 +1,62 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+}
+
+ext {
+    springBootVersion = '2.7.2'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+allprojects {
+    group = 'sap.com.nomination'
+    version = '0.0.1-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'java-library'        // java version etc...
+    apply plugin: 'io.spring.dependency-management'
+
+    // Java source/target version
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        // Annotation: please always set our private nexus as the first repo when run CI pipeline.
+        maven {
+            url 'https://nexus.eurekacloud.io/repository/maven-public/'
+            credentials {
+                username = System.getenv('NEXUS_USER') ?: ''
+                password = System.getenv('NEXUS_PASSWORD') ?: ''
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+
+    dependencyManagement {
+        //parent pom
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+    }
+
+    dependencies{
+        compileOnly  'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+}

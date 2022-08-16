@@ -1,0 +1,10 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.2'   // Springboot application
+}
+
+dependencies {
+    implementation project(':nomination.api')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
