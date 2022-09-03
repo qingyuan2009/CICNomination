@@ -27,7 +27,7 @@ gradle-app.setting
 # Ignore all these local secret
 # Refer: https://jira.eurekacloud.io/browse/DX-514
 mock/**/kafka.properties
-mock/**/pgadmin.env
+mock/local/pgadmin.env
 mock/**/postgres.env
 mock/**/postgres.properties
 
